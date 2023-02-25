@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style_1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-logo">
+            <h3><span>T</span>eacher Portal</h3>
+
+        </div>
+        <div class="nav-bar">
+            <a href="index.html">Sing In</a>
+            <a href="login.html">Logn in</a>
+        </div>
+    </header>
+
+    <!-- /Main dashbord -->
+    <div class="dashbord-header">
+        <p>Wellcome back : <span id="username"> </span></p>
+        <h1>Teacher Dashboard</h1>
+        <p>Your mail id : <span id="Useremail"> </span> </p>
+    </div>
+    <!-- dashbord from -->
+    <div class="dashbord-from">
+        <div class="input-box">
+            <h2>Change Password</h2>
+            <div class="input-filed">
+                <i class="fa fa-lock"></i>
+                <input type="text" placeholder="Old Password" id="old_password">
+            </div>
+            <div class="input-filed">
+                <i class="fa fa-lock"></i>
+                <input type="text" placeholder="New Password" id="new_password">
+            </div>
+            <div class="input-filed">
+
+                <i class="fa fa-lock"></i>
+                <input type="text" placeholder="confirm Password" id="con_password">
+            </div>
+            <p id="dashbordError">Old Password not correct</p>
+            <button class="change_password" id="chgPassBtn">Change Password</button>
+            <button class="log_out_btn" id="LogOutBTn">Log Out</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+
+    <script>
+        window.addEventListener('load', (event) => {
+            let emailLogInfo = JSON.parse(localStorage.getItem("loginInfo"));
+            console.log(emailLogInfo);
+            let temp = JSON.parse(localStorage.getItem("data"));
+            for (let i in temp) {
+                if (temp[i].email === emailLogInfo) {
+                    document.getElementById("username").innerHTML = temp[i].name;
+                    document.getElementById("Useremail").innerHTML = temp[i].email;
+
+
+                }
+            }
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+        let chgPassBtn = document.getElementById("chgPassBtn");
+
+        //this function check the old paassword exit or not
+        function oldPasswordExit(oldPassword, dashbordError) {
+            // dashbordError.innerHTML = "";
+            dashbordError.style.cssText = "display:none";
+            let temp = JSON.parse(localStorage.getItem("data"));
+            for (let i in temp) {
+                if (temp[i].password === oldPassword) {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+        function checkConfirmPassword(password, newPassword, dashbordError) {
+
+            dashbordError.style.cssText = "display:none";
+            if (password === newPassword && password != '' && newPassword != "") {
+                return true;
+            }
+            return false;
+
+        }
+        chgPassBtn.addEventListener("click", () => {
+            console.log("clicked");
+            let oldPassword = document.getElementById("old_password").value;
+            let newPassword = document.getElementById("new_password").value;
+            let conPassword = document.getElementById("con_password").value;
+            let dashbordError = document.getElementById("dashbordError");
+            if (!oldPasswordExit(oldPassword, dashbordError)) {
+                dashbordError.innerHTML = "Old password is not correct";
+                dashbordError.style.cssText = "display:block";
+            } else if (!checkConfirmPassword(newPassword, conPassword, dashbordError)) {
+                dashbordError.innerHTML = "Password and Confirm password not correct";
+                dashbordError.style.cssText = "display:block";
+            } else {
+                let temp = JSON.parse(localStorage.getItem("data"));
+                for (let i in temp) {
+                    if (temp[i].password === oldPassword) {
+                        temp[i].password = newPassword;
+                        localStorage.setItem("data", JSON.stringify(temp));
+                        swal("Good job!", "Passsword changed successfully", "success")
+                    }
+                }
+
+            }
+
+        })
+        //log in button
+        let LogOutBTn = document.getElementById("LogOutBTn");
+        LogOutBTn.addEventListener("click", function () {
+            window.location.href = "login.html";
+
+        })
+
+
+    </script>
+</body>
+
+</html>

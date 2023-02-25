@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  background: linear-gradient(
+    90deg,
+    rgba(22, 13, 169, 1) 0%,
+    rgba(9, 12, 206, 1) 12%,
+    rgba(13, 30, 141, 0.99781162464986) 41%,
+    rgba(12, 31, 172, 0.978203781512605) 66%,
+    rgba(16, 27, 232, 1) 91%,
+    rgba(29, 32, 161, 1) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+form {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 40%;
+  gap: 1rem;
+  padding: 1rem;
+}
+.input-box label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.input-box input {
+  width: 95%;
+  /* background-color: #ccc; */
+  font-size: 1rem;
+  padding: 0.4rem;
+  outline: none;
+}
+button {
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(224, 4, 219, 1) 28%,
+    rgba(229, 3, 114, 0.978203781512605) 73%,
+    rgba(183, 0, 255, 1) 100%
+  );
+  padding: 0.8rem;
+  color: #fff;
+  display: block;
+  width: 100%;
+  margin: 0.5rem;
+  border: none;
+  border-radius: 10px;
+}
+img {
+  width: 100%;
+  height: 80px;
+}
+#error {
+  color: red;
+  display: block;
+  text-align: center;
+}
+#SingUperror {
+  color: red;
+  display: block;
+  text-align: center;
+  visibility: hidden;
+}

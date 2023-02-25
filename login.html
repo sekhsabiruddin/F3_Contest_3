@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_1.css">
+</head>
+
+<body>
+
+
+    <header>
+        <div class="header-logo">
+            <h3><span>T</span>eacher Portal</h3>
+
+        </div>
+        <div class="nav-bar">
+            <a href="index.html">Sing In</a>
+            <a href="login.html">Logn in</a>
+        </div>
+    </header>
+    <div class="container">
+        <form action="">
+            <div class="input-box">
+                <img src="image/wellcome-img.png" alt="">
+            </div>
+
+            <div class="input-box">
+                <label for="">Email</label>
+                <input type="text" placeholder="Enter you email" id="email">
+
+            </div>
+            <div class="input-box">
+                <label for="">Password</label>
+                <input type="text" placeholder="Enter your Password" id="Password">
+
+            </div>
+            <p id="SingUperror">Please Enter correct Password and Email</p>
+            <div class="button-box">
+                <button id="sign-in">SIGN UP</button>
+
+            </div>
+        </form>
+    </div>
+    <script>
+        let singUpBtn = document.getElementById("sign-in");
+        singUpBtn.addEventListener("click", (e) => {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = ' ';
+            const charactersLength = characters.length;
+            for (let i = 0; i < 16; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            console.log("16 random number is " + result);
+
+            e.preventDefault();
+            let emailExitFlag = true;
+            let eamil = document.getElementById("email").value;
+            let password = document.getElementById("Password").value;
+            let error = document.getElementById("SingUperror");
+            console.log(eamil);
+            console.log(password);
+            let temp = JSON.parse(localStorage.getItem("data"));
+            for (let i in temp) {
+                if (temp[i].email === eamil && temp[i].password === password) {
+
+                    emailExitFlag = false;
+                    let temp = JSON.parse(localStorage.getItem("data"));
+                    temp[i]["token"] = result;
+                    console.log(temp);
+                    localStorage.setItem("data", JSON.stringify(temp));
+                    localStorage.setItem("loginInfo", JSON.stringify(temp[i].email));
+
+                    window.location.href = "dashboard.html";
+                }
+            }
+            if (emailExitFlag) {
+                error.style.cssText = "visibility:visible";
+            }
+
+        })
+
+
+
+
+    </script>
+
+</body>
+
+</html>

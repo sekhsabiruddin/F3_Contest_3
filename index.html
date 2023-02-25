@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-logo">
+            <i class="fa fa-university" aria-hidden="true"></i>
+            <h3><span>T</span>eacher Portal</h3>
+
+        </div>
+        <div class="nav-bar">
+            <a href="index.html">Sing In</a>
+            <a href="login.html">Logn in</a>
+        </div>
+    </header>
+    <div class="container">
+        <form action="">
+            <div class="input-box">
+                <img src="image/wellcome-img.png" alt="">
+            </div>
+            <div class="input-box">
+                <label for="">Name</label>
+                <input type="text" placeholder="Enter you name" id="name">
+            </div>
+            <div class="input-box">
+                <label for="">Email</label>
+                <input type="text" placeholder="Enter Your eamil" id="eamil">
+            </div>
+            <div class="input-box">
+                <label for="">Password</label>
+                <input type="text" placeholder="Enter your Password" id="password">
+            </div>
+            <div class="input-box">
+                <label for="">Confrim Password</label>
+                <input type="text" placeholder="Enter you name" id="confrim_password">
+            </div>
+            <p id="error"></p>
+            <div class="button-box">
+                <button id="btn">SIGN IN</button>
+
+            </div>
+        </form>
+
+    </div>
+    <script>
+        let btn = document.getElementById("btn");
+        btn.addEventListener("click", validateForm);
+        let arr = [];
+
+
+        function validateForm(e) {
+
+            e.preventDefault();
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("eamil").value;
+            let password = document.getElementById("password").value;
+            let error = document.getElementById("error");
+            let confrim_password = document.getElementById("confrim_password").value;
+
+            if (!nameValid(name, error)) {
+                error.innerHTML = "Name should be contain at least 3 Character"
+            }
+            else if (!emailValid(email, error)) {
+                error.innerHTML = "Email should be valid";
+            }
+            else if (!checkPasword(password)) {
+                error.innerHTML = "Password should be 1 small and capital character and number";
+            }
+            else if (password != confrim_password) {
+                error.innerHTML = "Password and confrim password did not match";
+            } else {
+                error.innerHTML = " ";
+                let obj = { name, email, password }
+
+                let temp = JSON.parse(localStorage.getItem("data"));
+                console.log(temp);
+                if (temp) {
+                    arr = [...temp]
+                }
+                arr.push(obj)
+                localStorage.setItem("data", JSON.stringify(arr));
+                window.location.href = "login.html"
+            }
+
+        }
+        //------------------------------Name valid validation 
+        function nameValid(name, error) {
+            if (name.length > 2) {
+                error.innerHTML = "";
+                return true;
+            }
+            return false;
+        }
+
+        function emailValid(username, error) {
+            var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            if (username.match(validRegex)) {
+
+                error.innerHTML = "";
+
+                return true;
+
+            } else {
+
+                return false;
+            }
+        }
+        //------------------------------Name valid End      
+        function checkPasword(password) {
+            let cl = 0, sl = 0, n = 0, sc = 0;
+            for (let t of password) {
+                if (t >= "A" && t <= "Z") {
+                    cl++;
+                }
+                else if (t >= "a" && t <= "z") {
+                    sl++;
+                }
+                else if (t >= "0" && t <= "9") {
+                    n++;
+                }
+
+            }
+            if (cl >= 1 && sl >= 1 && n >= 1) {
+                return true;
+            }
+            return false;
+        }
+    </script>
+</body>
+
+</html>
